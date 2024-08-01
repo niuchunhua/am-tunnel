@@ -83,6 +83,7 @@ export default {
 			userID = env.UUID || userID;
 			proxyIP = env.PROXYIP || proxyIP;
 			dohURL = env.DNS_RESOLVER_URL || dohURL;
+			subconfig = env.SUBCONFIG || subconfig;
 			let userID_Path = userID;
 			if (userID.includes(',')) {
 				userID_Path = userID.split(',')[0];
@@ -1033,8 +1034,6 @@ clash-meta
 <a href='sing-box://import-remote-profile?url=${encodeURIComponent(subbestip)}' target='_blank'>(sin-box工具)节点订阅连接优选IP</a> <button onclick='copyToClipboard("${singboxlink}")'><i class="fa fa-clipboard"></i> Copy</button>
 <a href='${quantumultxlink}' target='_blank'>(Quantumult X工具)节点订阅连接优选IP</a> <button onclick='copyToClipboard("${quantumultxlink}")'><i class="fa fa-clipboard"></i> Copy</button>
 <a href='sn://subscription?url=${encodeURIComponent(subbestip)}' target='_blank'>nekobox节点订阅连接优选IP</a>
-<a href='//${hostName}/sub/${userIDArray[0]}?format=trojan' target='_blank'>trojan节点订阅连接</a> <button onclick='copyToClipboard("${sublink}?format=trojan")'><i class="fa fa-clipboard"></i> Copy</button>
-<a href='${subbestip}&format=trojan' target='_blank'>trojan节点订阅连接优选IP</a> <button onclick='copyToClipboard("${subbestip}&format=trojan")'><i class="fa fa-clipboard"></i> Copy</button>
 </p>`;
 	// HTML Head with CSS and FontAwesome library
 	const htmlHead = `
@@ -1216,7 +1215,7 @@ function createVlessBestIpSub(userID_Path, hostName, newAddressesapi, format) {
 
 	addresses = addresses.concat(newAddressesapi);
 	// 使用Set对象去重
-	const uniqueAddresses = [...addresses,...new Set(addresses)];
+	const uniqueAddresses = [...new Set(addresses)];
 
 	const responseBody = uniqueAddresses.map((address, i) => {
 		let port = "443";
@@ -1335,4 +1334,3 @@ async function nginx() {
 	`
 	return text;
 }
-
